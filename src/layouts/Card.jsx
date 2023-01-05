@@ -7,8 +7,8 @@ const Card = () => {
     const [student, setStudent] = useState({});
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"));
-        user && setStudent(student);
-    }, [student]);
+        user && setStudent(user);
+    }, []);
     return (
         <>
             <h1 className="my-2">Карточка студента</h1>

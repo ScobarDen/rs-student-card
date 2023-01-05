@@ -41,6 +41,9 @@ const EditForm = ({student}) => {
             isRequired: {
                 message: "Ссылка на портфолио обязательна для заполнения"
             },
+            isValidLink: {
+                message: "Заполненное поле должно быть ссылкой"
+            }
         },
         birthday:{
             isValidBirthDay: {
@@ -62,10 +65,7 @@ const EditForm = ({student}) => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-
-        console.log({
-            ...data,
-        });
+        localStorage.setItem("user", JSON.stringify(data));
     };
     return (
         <>
@@ -99,7 +99,7 @@ const EditForm = ({student}) => {
                     onChange={handleChange}
                     error={errors.potfolioLink}
                 />
-                {!needToCreate
+                {needToCreate
                     ? <button
                         className="btn btn-primary"
                         type="submit"
