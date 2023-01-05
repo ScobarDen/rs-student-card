@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/rs-student-card/static/css/main.f2ebb3d0.css",
+    "main.js": "/rs-student-card/static/js/main.e7890c3f.js",
+    "index.html": "/rs-student-card/index.html",
+    "main.f2ebb3d0.css.map": "/rs-student-card/static/css/main.f2ebb3d0.css.map",
+    "main.e7890c3f.js.map": "/rs-student-card/static/js/main.e7890c3f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f2ebb3d0.css",
+    "static/js/main.e7890c3f.js"
+  ]
+}
