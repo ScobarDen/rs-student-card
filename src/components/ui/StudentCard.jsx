@@ -4,7 +4,7 @@ import {StudentContext} from "../../App";
 
 export const StudentCard = () => {
     const navigate = useNavigate();
-    const {student} = useContext(StudentContext);
+    const {student, setStudent} = useContext(StudentContext);
     const getAge = (birthday) => {
         const yearToday = new Date().getFullYear();
         const age = yearToday - birthday;
@@ -14,6 +14,16 @@ export const StudentCard = () => {
         if (["2", "3", "4"].includes(endingOfAge)) ending = "года";
         if (["11", "12", "13", "14"].includes(age.toString().slice(-2))) ending = "лет";
         return `(${age} ${ending})`
+    }
+
+    const removeStudent = () => {
+        localStorage.removeItem("user");
+        setStudent({
+            name: "",
+            surname: "",
+            birthday: 1999,
+            potfolioLink: "",
+        });
     }
 
     return (
@@ -28,6 +38,7 @@ export const StudentCard = () => {
                     href={student.potfolioLink}>{student.potfolioLink}</a></div>
             </div>
             <button className="btn btn-primary mt-3" onClick={() => navigate("/edit")}>Редактировать</button>
+            <button className="btn btn-dark mt-3 mx-3" onClick={removeStudent}>Удалить</button>
         </>
     );
 };

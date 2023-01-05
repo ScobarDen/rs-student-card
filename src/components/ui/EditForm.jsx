@@ -13,12 +13,21 @@ const EditForm = () => {
     const [errors, setErrors] = useState({});
     const [showModal, setShowModal] = useState(false);
     const [needToCreate, setNeedToCreate] = useState(true);
+    const [data, setData] = useState({
+        name: "",
+        surname: "",
+        birthday: 1999,
+        potfolioLink: "",
+    });
     useEffect(()=>{
-        if (student.name) setNeedToCreate(false);
+        if (student.name) {
+            setNeedToCreate(false);
+            setData(student);
+        }
     },[]);
 
     const handleChange = (target) => {
-        setStudent((prevState) => ({
+        setData((prevState) => ({
             ...prevState,
             [target.name]: target.value
         }));
@@ -51,9 +60,9 @@ const EditForm = () => {
     };
     useEffect(() => {
         validate();
-    }, [student]);
+    }, [data]);
     const validate = () => {
-        const errors = validator(student, validatorConfig);
+        const errors = validator(data, validatorConfig);
         setErrors(errors);
         return Object.keys(errors).length === 0;
     };
@@ -63,6 +72,7 @@ const EditForm = () => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
+        setStudent(data);
         localStorage.setItem("user", JSON.stringify(student));
         setShowModal(true);
     };
@@ -77,28 +87,28 @@ const EditForm = () => {
                 <TextField
                     label="Имя"
                     name="name"
-                    value={student.name}
+                    value={data.name}
                     onChange={handleChange}
                     error={errors.name}
                 />
                 <TextField
                     label="Фамилия"
                     name="surname"
-                    value={student.surname}
+                    value={data.surname}
                     onChange={handleChange}
                     error={errors.surname}
                 />
                 <NumberField
                     label="Год рождения"
                     name="birthday"
-                    value={student.birthday}
+                    value={data.birthday}
                     onChange={handleChange}
                     error={errors.birthday}
                 />
                 <TextField
                     label="Ссылка на портфолио"
                     name="potfolioLink"
-                    value={student.potfolioLink}
+                    value={data.potfolioLink}
                     onChange={handleChange}
                     error={errors.potfolioLink}
                 />
