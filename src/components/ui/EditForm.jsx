@@ -1,28 +1,24 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {validator} from "../../utils/validator";
 import TextField from "../common/form/TextField";
-import isEmpty from "lodash.isempty";
 import {useNavigate} from "react-router-dom";
 import NumberField from "../common/form/NumberField";
 import Modal from "../common/Modal";
+import {StudentContext} from "../../App";
 
-const EditForm = ({student}) => {
+const EditForm = () => {
+    const {student, setStudent} = useContext(StudentContext);
     const navigate = useNavigate();
-    const needToCreate = isEmpty(student);
-    const [data, setData] = useState({
-        name: "",
-        surname: "",
-        birthday: 1999,
-        potfolioLink: "",
-    });
-    const [showModal, setShowModal] = useState(false);
-
-    if (!needToCreate) setData(student);
 
     const [errors, setErrors] = useState({});
+    const [showModal, setShowModal] = useState(false);
+    const [needToCreate, setNeedToCreate] = useState(true);
+    useEffect(()=>{
+        if (student.name) setNeedToCreate(false);
+    },[]);
 
     const handleChange = (target) => {
-        setData((prevState) => ({
+        setStudent((prevState) => ({
             ...prevState,
             [target.name]: target.value
         }));
@@ -55,9 +51,9 @@ const EditForm = ({student}) => {
     };
     useEffect(() => {
         validate();
-    }, [data]);
+    }, [student]);
     const validate = () => {
-        const errors = validator(data, validatorConfig);
+        const errors = validator(student, validatorConfig);
         setErrors(errors);
         return Object.keys(errors).length === 0;
     };
@@ -67,7 +63,7 @@ const EditForm = ({student}) => {
         e.preventDefault();
         const isValid = validate();
         if (!isValid) return;
-        localStorage.setItem("user", JSON.stringify(data));
+        localStorage.setItem("user", JSON.stringify(student));
         setShowModal(true);
     };
     const handleModal = (e) => {
@@ -81,28 +77,28 @@ const EditForm = ({student}) => {
                 <TextField
                     label="Имя"
                     name="name"
-                    value={data.name}
+                    value={student.name}
                     onChange={handleChange}
                     error={errors.name}
                 />
                 <TextField
                     label="Фамилия"
                     name="surname"
-                    value={data.surname}
+                    value={student.surname}
                     onChange={handleChange}
                     error={errors.surname}
                 />
                 <NumberField
                     label="Год рождения"
                     name="birthday"
-                    value={data.birthday}
+                    value={student.birthday}
                     onChange={handleChange}
                     error={errors.birthday}
                 />
                 <TextField
                     label="Ссылка на портфолио"
                     name="potfolioLink"
-                    value={data.potfolioLink}
+                    value={student.potfolioLink}
                     onChange={handleChange}
                     error={errors.potfolioLink}
                 />
@@ -133,7 +129,7 @@ const EditForm = ({student}) => {
                     </>
                 }
             </form>
-            {showModal && <Modal title="Обновлено" handleModal={handleModal}/>}
+            {showModal && <Modal title={needToCreate ? "Создано" : "Обновлено"} handleModal={handleModal}/>}
         </>
     );
 };

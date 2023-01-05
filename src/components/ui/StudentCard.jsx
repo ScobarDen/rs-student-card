@@ -1,8 +1,10 @@
 import {useNavigate} from "react-router-dom";
+import {useContext} from "react";
+import {StudentContext} from "../../App";
 
-export const StudentCard = ({student}) => {
+export const StudentCard = () => {
     const navigate = useNavigate();
-
+    const {student} = useContext(StudentContext);
     const getAge = (birthday) => {
         const yearToday = new Date().getFullYear();
         const age = yearToday - birthday;

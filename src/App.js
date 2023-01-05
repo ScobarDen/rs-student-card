@@ -6,14 +6,19 @@ import {createContext, useEffect, useState} from "react";
 export const StudentContext = createContext({});
 
 function App() {
-    const [student, setStudent] = useState({});
+    const [student, setStudent] = useState({
+        name: "",
+        surname: "",
+        birthday: 1999,
+        potfolioLink: "",
+    });
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"));
         user && setStudent(user);
     }, []);
 
     return (
-        <StudentContext.Provider value={student}>
+        <StudentContext.Provider value={{student,setStudent}}>
             <div className="container">
                 <Routes>
                     <Route path="/" element={<Card/>}/>
