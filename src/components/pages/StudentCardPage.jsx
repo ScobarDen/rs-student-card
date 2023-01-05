@@ -1,8 +1,8 @@
-export const StudentCardPage = props => {
-    return (
-        <>
+import {StudentCard} from "../ui/StudentCard";
 
-        </>
+export const StudentCardPage = ({student}) => {
+    return (
+        <StudentCard student={student}/>
     );
 };
 

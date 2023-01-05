@@ -4,6 +4,7 @@ import TextField from "../common/form/TextField";
 import isEmpty from "lodash.isempty";
 import {useNavigate} from "react-router-dom";
 import NumberField from "../common/form/NumberField";
+import Modal from "../common/Modal";
 
 const EditForm = ({student}) => {
     const navigate = useNavigate();
@@ -14,6 +15,7 @@ const EditForm = ({student}) => {
         birthday: 1999,
         potfolioLink: "",
     });
+    const [showModal, setShowModal] = useState(false);
 
     if (!needToCreate) setData(student);
 
@@ -45,7 +47,7 @@ const EditForm = ({student}) => {
                 message: "Заполненное поле должно быть ссылкой"
             }
         },
-        birthday:{
+        birthday: {
             isValidBirthDay: {
                 message: "Год рождения введен некорректно"
             }
@@ -66,7 +68,12 @@ const EditForm = ({student}) => {
         const isValid = validate();
         if (!isValid) return;
         localStorage.setItem("user", JSON.stringify(data));
+        setShowModal(true);
     };
+    const handleModal = (e) => {
+        setShowModal(false);
+        navigate("/");
+    }
     return (
         <>
             <h1>{needToCreate ? "Создать" : "Редактировать"}</h1>
@@ -110,7 +117,9 @@ const EditForm = ({student}) => {
                     : <>
                         <button
                             className="btn btn-dark"
-                            onClick={() => {navigate("/")}}
+                            onClick={() => {
+                                navigate("/")
+                            }}
                         >
                             Назад
                         </button>
@@ -123,8 +132,8 @@ const EditForm = ({student}) => {
                         </button>
                     </>
                 }
-
             </form>
+            {showModal && <Modal title="Обновлено" handleModal={handleModal}/>}
         </>
     );
 };

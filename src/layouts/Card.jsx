@@ -12,7 +12,7 @@ const Card = () => {
     return (
         <>
             <h1 className="my-2">Карточка студента</h1>
-            {isEmpty(student) ? <EmptyPage/> : <StudentCardPage/>}
+            {isEmpty(student) ? <EmptyPage/> : <StudentCardPage student={student}/>}
         </>
     );
 };
