@@ -1,5 +1,3 @@
-
-
 export const StudentCardPage = props => {
     return (
         <>

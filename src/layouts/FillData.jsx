@@ -1,8 +1,8 @@
-const FillData = props => {
+import EditPage from "../components/pages/EditPage";
+
+const FillData = () => {
     return (
-        <>
-            FillData
-        </>
+        <EditPage/>
     );
 };
 
