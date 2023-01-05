@@ -5,8 +5,8 @@ export const EditPage = () => {
     const [student, setStudent] = useState({});
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"));
-        user && setStudent(student);
-    }, [student]);
+        user && setStudent(user);
+    }, []);
     return (
         <div className="w-50 mx-auto">
             <EditForm student={student}/>
